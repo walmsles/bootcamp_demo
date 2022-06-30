@@ -6,9 +6,6 @@ from aws_lambda_powertools.event_handler import APIGatewayRestResolver, CORSConf
 from aws_lambda_powertools.utilities.validation import validate
 from aws_lambda_powertools.event_handler.exceptions import NotFoundError, BadRequestError
 
-# import JSON Schela validation formats for applying iwth vlaidator decorator
-import schemas
-
 tracer = Tracer()
 logger = Logger()
 dynamo_client = boto3.resource('dynamodb')
