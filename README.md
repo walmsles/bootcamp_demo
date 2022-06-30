@@ -128,3 +128,72 @@ aws cloudformation delete-stack --stack-name bootcamp-demo
 See the [AWS SAM developer guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) for an introduction to SAM specification, the SAM CLI, and serverless application concepts.
 
 Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/)
+
+## Additional API Calls added
+
+I have added a simple post and get API using AWS Lambda Powertools which can be tested pretty easily.
+
+The last section of the template.yaml file is stack "Outputs" which will print out interesting things form the deployed account.
+
+### Outputs form template.yaml file
+
+```yaml
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  Api:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  ApiFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt ApiFunction.Arn
+  ApiFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt ApiFunctionRole.Arn
+  UsersTableName:
+    Description: "Users table name"
+    Value: !Ref UsersTable
+```
+### Sample output after deployment
+
+Use the Api URL to test your API.
+
+```
+CloudFormation outputs from deployed stack
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Outputs                                                                                                                                                                                                                                          ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Key                 ApiFunctionIamRole                                                                                                                                                                                                                           
+Description         Implicit IAM Role created for Hello World function                                                                                                                                                                                           
+Value               arn:aws:iam::xxxxxxxxxxxx:role/bootcamp-demo-ApiFunctionRole-XXDGFD                                                                                                                                                                   
+
+Key                 UsersTableName                                                                                                                                                                                                                               
+Description         Users table name                                                                                                                                                                                                                             
+Value               bootcamp-demo-UsersTable-12CBREPDY9NNY                                                                                                                                                                                                       
+
+Key                 Api                                                                                                                                                                                                                                          
+Description         API Gateway endpoint URL for Prod stage for Hello World function                                                                                                                                                                             
+Value               https://apigw-random-domain.execute-api.ap-southeast-2.amazonaws.com/Prod/hello/                                                                                                                                                                      
+
+Key                 ApiFunction                                                                                                                                                                                                                                  
+Description         Hello World Lambda Function ARN                                                                                                                                                                                                              
+Value               arn:aws:lambda:ap-southeast-2:308836149415:function:bootcamp-demo-ApiFunction-FVaJsfX0vmd9                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+## Creating a User in DynamoDB
+
+To create a user POST the following API payload to your deployed API to _api-gw-domain.execute-api.region.amazonaws.com/Prod/users_
+
+```json
+{
+    "password": "supersecret",
+    "username": "michael",
+    "email": "michael@example.com",
+    "name": "Michael"
+}
+```
+
+To retrieve the user do a GET using API URL _api-gw-domain.execute-api.region.amazonaws.com/Prod/users/michael@example.com_
+
+
