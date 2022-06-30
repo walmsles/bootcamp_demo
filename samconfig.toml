@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "bootcamp-demo"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-cwe8tm9iwpgs"
+s3_prefix = "bootcamp-demo"
+region = "ap-southeast-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
