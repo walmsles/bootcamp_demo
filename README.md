@@ -1,5 +1,7 @@
 # bootcamp-demo
 
+This is a Demo Serverless API built from the standard Hello World SAM template for Python.  This project is used for demonstration purposes at the Serverless Workshop for Accenture Technical Bootcamps that are run periodically throughout the year.  If you are an Accenture bootcamp attendee then this is the project that you saw being built during rthe live coding demonstration.  Feel free to read the standard README from the Example template to learn how to deploy this to your cloud account and use as a basis for your technical bootcamp solution (if it suits).
+
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 
 - hello_world - Code for the application's Lambda function.
